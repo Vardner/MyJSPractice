@@ -1,0 +1,125 @@
+.Menu {
+  font-size: 17px;
+  color: #356ED5;
+
+  &-item {
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+
+    .Menu--sublist > & {
+      padding: 10px 10px;
+    }
+
+    &.disabled {
+      color: #7B7E7F;;
+    }
+  }
+
+  &-link {
+    cursor: default;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+    letter-spacing: 0.5px;
+    text-shadow: -0   -2px 0 #000000,
+    0   -2px 0 #000000,
+    -0 2px 0 #000000,
+    0 2px 0 #000000,
+    -2px -0 0 #000000,
+    2px -0 0 #000000,
+    -2px 0 0 #000000,
+    2px 0 0 #000000,
+    -1px -2px 0 #000000,
+    1px -2px 0 #000000,
+    -1px 2px 0 #000000,
+    1px 2px 0 #000000,
+    -2px -1px 0 #000000,
+    2px -1px 0 #000000,
+    -2px 1px 0 #000000,
+    2px 1px 0 #000000,
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000,
+    -2px 2px 0 #000000,
+    2px 2px 0 #000000,
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000,
+    -2px 2px 0 #000000,
+    2px 2px 0 #000000;
+
+    .Menu-item:not(.disabled) > &:hover {
+      text-shadow: 1px 1px 11px #BC91F7;
+      cursor: pointer;
+    }
+  }
+
+  &-sublist {
+    color: #6DC2F4;
+    font-size: 14px;
+    max-height: 0;
+    transform: scaleY(0);
+    transition: all 0.3s ease-in-out;
+
+    .active > & {
+      max-height: 1000px;
+      transform: scaleY(1);
+    }
+  }
+
+  &--tablet {
+    padding: 0 10px;
+    font-size: 18px;
+    color: #FFF;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: calc(100% + 3px);
+    left: 0;
+    max-height: 200px;
+    overflow-y: scroll;
+    min-width: 100%;
+    background: #D03042;
+    z-index: 1;
+    box-sizing: border-box;
+    transform-origin: top;
+    transform: rotateX(90deg);
+    transition: all 0.3s linear;
+    border-bottom: 2px solid white;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      transform: rotateX(0deg);
+    }
+
+    & .Menu-item {
+      border-bottom: 1px solid rgba(255, 255, 255, .7);
+      padding: 0 10px;
+      min-height: 40px;
+
+      &:last-child {
+        border: none;
+      }
+    }
+
+    & .Menu-link {
+      text-shadow: initial;
+      font-weight: normal;
+      vertical-align: -50%;
+    }
+
+    & .Menu-sublist {
+      transform-origin: top;
+
+      .Menu-item{
+        border-bottom: 1px dashed white;
+        color: white;
+
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+  }
+}

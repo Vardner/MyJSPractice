@@ -1,0 +1,23 @@
+.Date {
+  color: #fff;
+  font-size: 18px;
+  white-space: nowrap;
+  position: absolute;
+  top: calc(50% - 11px);
+  right: 15px;
+
+  footer & {
+    position: static;
+    padding-top: 23px;
+    float: left;
+  }
+
+  &-item{
+    margin: 0;
+    padding: 0;
+
+    &--colon{
+      animation: colonFlicker 1s steps(2,start) infinite;
+    }
+  }
+}

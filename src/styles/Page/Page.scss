@@ -1,0 +1,82 @@
+.Page {
+  position: relative;
+  overflow: auto;
+  height: calc(100% - 120px);
+  z-index: 0;
+  @include clearfix();
+
+  & > [class *="cell-"] {
+    padding: 0;
+    height: 100%;
+  }
+
+  &-wrap {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  &-content {
+    background: #471846;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: all 0.4s ease;
+  }
+
+  &-task {
+    &List {
+      max-width: 800px;
+      margin: auto;
+      padding: 25px 40px;
+      box-sizing: border-box;
+      font-size: 16px;
+
+      & p {
+        padding-bottom: 10px;
+      }
+
+      & label {
+        display: block;
+        position: relative;
+        padding-bottom: 10px;
+        @include clearfix();
+      }
+    }
+
+    &Item {
+      padding: 10px 0;
+      margin: auto;
+    }
+
+    &Title {
+      padding-bottom: 10px;
+      color: #4CE974;
+    }
+
+    &Text {
+      color: #FFF;
+      text-align: justify;
+
+      &--decorated {
+        color: #FF802B;
+        font-style: italic;
+        font-size: 18px;
+      }
+    }
+
+    &Input {
+      padding: 5px;
+      height: 100%;
+      border-radius: 3px;
+      float: right;
+      
+      @media (max-width: 374px) {
+        float: left;
+      }
+    }
+  }
+}
+
+
+

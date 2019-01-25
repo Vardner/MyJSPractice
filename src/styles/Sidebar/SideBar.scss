@@ -1,0 +1,87 @@
+.Sidebar {
+  overflow: auto;
+  border-right: 3px solid #438DD1;
+  background-image: url("../images/paralax-bg.jpg");
+  height: 100%;
+
+  &-content {
+    padding: 20px 20px;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+  }
+
+  &-list {
+    font-size: 17px;
+    color: #356ed5;
+  }
+
+  &-line {
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+
+    .Sidebar-sublist > & {
+      padding: 10px 10px;
+    }
+
+    &.disabled {
+      color: #7b7e7f;;
+    }
+  }
+
+  &-link {
+    cursor: default;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+    letter-spacing: 0.5px;
+    text-shadow: -0   -2px 0 #000000,
+    0   -2px 0 #000000,
+    -0 2px 0 #000000,
+    0 2px 0 #000000,
+    -2px -0 0 #000000,
+    2px -0 0 #000000,
+    -2px 0 0 #000000,
+    2px 0 0 #000000,
+    -1px -2px 0 #000000,
+    1px -2px 0 #000000,
+    -1px 2px 0 #000000,
+    1px 2px 0 #000000,
+    -2px -1px 0 #000000,
+    2px -1px 0 #000000,
+    -2px 1px 0 #000000,
+    2px 1px 0 #000000,
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000,
+    -2px 2px 0 #000000,
+    2px 2px 0 #000000,
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000,
+    -2px 2px 0 #000000,
+    2px 2px 0 #000000;
+
+    .Sidebar-line:not(.disabled) > &:hover {
+      text-shadow: 1px 1px 11px #BC91F7;
+      cursor: pointer;
+    }
+  }
+
+  &-sublist {
+    color: #6dc2f4;
+    font-size: 14px;
+    max-height: 0;
+    transform: scaleY(0);
+    transition: all 0.3s ease-in-out;
+
+    .active > & {
+      max-height: 1000px;
+      transform: scaleY(1);
+    }
+  }
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    display: none;
+  }
+}
