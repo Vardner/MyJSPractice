@@ -3,13 +3,14 @@
   font-size: 18px;
   white-space: nowrap;
   position: absolute;
-  top: calc(50% - 11px);
+  top: calc(50% - 5px);
   right: 15px;
 
   footer & {
     position: static;
     padding-top: 23px;
     float: left;
+    top: calc(50% - 11px);
   }
 
   &-item{

@@ -9,16 +9,13 @@
     height: 100%;
   }
 
-  &-clocks {
-    color: #FFF;
-
-    &Item {
-      font-size: 18px;
-
-      &--colon {
-        animation: colonFlicker 1s steps(2, start) infinite;
-      }
-    }
+  &-currentSize {
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    color: white;
+    text-decoration: underline;
+    font-size: 14px;
   }
 
 }
