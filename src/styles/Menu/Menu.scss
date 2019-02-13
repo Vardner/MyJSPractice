@@ -6,51 +6,31 @@
     padding: 10px 20px;
     width: 100%;
     box-sizing: border-box;
+    white-space: nowrap;
 
     .Menu--sublist > & {
       padding: 10px 10px;
     }
 
-    &.disabled {
+    &.disabled  a{
       color: #7B7E7F;;
+      cursor: default;
     }
   }
 
   &-link {
-    cursor: default;
+    cursor: pointer;
     font-weight: bold;
     text-decoration: none;
-    color: inherit;
     font-size: inherit;
     letter-spacing: 0.5px;
-    text-shadow: -0   -2px 0 #000000,
-    0   -2px 0 #000000,
-    -0 2px 0 #000000,
-    0 2px 0 #000000,
-    -2px -0 0 #000000,
-    2px -0 0 #000000,
-    -2px 0 0 #000000,
-    2px 0 0 #000000,
-    -1px -2px 0 #000000,
-    1px -2px 0 #000000,
-    -1px 2px 0 #000000,
-    1px 2px 0 #000000,
-    -2px -1px 0 #000000,
-    2px -1px 0 #000000,
-    -2px 1px 0 #000000,
-    2px 1px 0 #000000,
-    -2px -2px 0 #000000,
-    2px -2px 0 #000000,
-    -2px 2px 0 #000000,
-    2px 2px 0 #000000,
-    -2px -2px 0 #000000,
-    2px -2px 0 #000000,
-    -2px 2px 0 #000000,
-    2px 2px 0 #000000;
+    color: #fff;
+
 
     .Menu-item:not(.disabled) > &:hover {
-      text-shadow: 1px 1px 11px #BC91F7;
+      text-shadow: 0 0 16px #f7992f;
       cursor: pointer;
+      color: #f7992f;
     }
   }
 
@@ -70,7 +50,6 @@
   &--tablet {
     padding: 0 10px;
     font-size: 18px;
-    color: #FFF;
     visibility: hidden;
     opacity: 0;
     position: absolute;
@@ -79,13 +58,11 @@
     max-height: 200px;
     overflow-y: scroll;
     min-width: 100%;
-    background: #D03042;
     z-index: 1;
     box-sizing: border-box;
     transform-origin: top;
     transform: rotateX(90deg);
     transition: all 0.3s linear;
-    border-bottom: 2px solid white;
 
     &.active {
       visibility: visible;
@@ -97,6 +74,8 @@
       border-bottom: 1px solid rgba(255, 255, 255, .7);
       padding: 0 10px;
       min-height: 40px;
+      white-space: nowrap;
+      background: #fff;
 
       &:last-child {
         border: none;
@@ -105,8 +84,9 @@
 
     & .Menu-link {
       text-shadow: initial;
-      font-weight: normal;
       vertical-align: -50%;
+      font-weight: bold;
+      color: #000;
     }
 
     & .Menu-sublist {

@@ -1,30 +1,44 @@
 'use strict';
 
-document.querySelector('.Button-sidebarToggle').parentElement.addEventListener('click', toggleSidebar);
+function toggleSidebar (e) {
+  const sidebarBtn = document.querySelector('.Button-menuWrapper');
+  const sidebar = document.querySelector('aside.Sidebar');
+  const tabletMenu = document.querySelector('.Menu--tablet');
+  const main = document.getElementById('Main');
 
-function toggleSidebar() {
-  let sidebarBtn = document.querySelector('.Button-sidebarToggle');
-  let sidebar = document.querySelector('aside.Sidebar');
-  let tabletMenu = document.querySelector('.Menu--tablet');
-  let main = document.getElementById('Main');
-
-  sidebarBtn.classList.toggle('active');
-
-  if (window.innerWidth > 768) {
-    if (sidebarBtn.classList.contains('active')) {
+  if (sidebarBtn.classList.contains('active') && e.target !== sidebarBtn && !e.target.closest('aside.Sidebar') &&  !e.target.closest('ul.Menu--tablet'))  {
+    if ( window.innerWidth > 768) {
       main.parentElement.classList.toggle('cell-9');
       main.parentElement.classList.toggle('cell-12');
+      main.classList.remove('perspective');
+      sidebar.parentElement.classList.toggle('cell-3');
+      sidebar.parentElement.classList.toggle('cell-none');
+      sidebarBtn.classList.remove('active');
+    } else {
+      tabletMenu.classList.remove('active');
+      main.classList.remove('perspective');
+      sidebarBtn.classList.remove('active');
+    }
 
+    return;
+  }
+
+  if (e.target.closest('.Button-menuWrapper')){
+    sidebarBtn.classList.toggle('active');
+
+    if (window.innerWidth > 768) {
+      main.parentElement.classList.toggle('cell-9');
+      main.parentElement.classList.toggle('cell-12');
+      main.classList.toggle('perspective');
       sidebar.parentElement.classList.toggle('cell-3');
       sidebar.parentElement.classList.toggle('cell-none');
     } else {
-      main.parentElement.classList.toggle('cell-12');
-      main.parentElement.classList.toggle('cell-9');
-      sidebar.parentElement.classList.toggle('cell-3');
-      sidebar.parentElement.classList.toggle('cell-none');
+      tabletMenu.classList.toggle('active');
+      main.classList.toggle('perspective');
     }
-  } else {
-    tabletMenu.classList.toggle('active');
   }
 }
+
+
+window.addEventListener('click',toggleSidebar);
 

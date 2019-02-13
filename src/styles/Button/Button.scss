@@ -1,59 +1,93 @@
-.Button{
+.Button {
+  min-width: 75px;
+  display: inline-block;
+  min-height: 40px;
+  background: #515151;
+  color: white;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  transition: all 0.4s ease-in;
 
-  &-wrap{
-    min-height: 30px;
-    min-width: 30px;
-    cursor: pointer;
-    display: inline-block;
-
-    .Header & {
-      position: absolute;
-      top: calc(50% - 15px);
-    }
+  &--centered {
+    display: block;
+    margin: 0 auto;
   }
 
-  &-sidebarToggle {
-    width: 20px;
-    height: 2px;
-    background: #FFF;
-    position: absolute;
-    top: calc(50% - 2px);
+  &:hover {
+    background: white;
+    color: #515151;
+    box-shadow: 0 0 3px 1px #515151;
+  }
 
-    &:before, &:after {
-      content: "";
-      width: 20px;
-      height: 2px;
-      left: 0;
-      background: #FFF;
-      position: absolute;
-      transform-origin: left;
-      transition: all 0.2s linear;
-    }
+  &-menu {
+    font-size: 22px;
+    line-height: 40px;
+    color: #FFF;
 
-    &:before {
-      top: -7px
-    }
-
-    &:after {
-      bottom: -7px;
-    }
-
-    &.active {
-      background: transparent;
-
-      &:before {
-        transform: rotate(45deg);
-      }
+    &Wrapper {
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+      width: 75px;
+      height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      margin-top: 10px;
 
       &:after {
-        transform: rotate(-45deg);
+        content: 'Menu';
+        color: #000;
+        background: #FFF;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px;
+        font-size: 13px;
+        font-family: Montserrat;
+        text-transform: uppercase;
+        font-weight: bold;
+        line-height: 40px;
+        transition: all 0.3s ease-in;
+        opacity: 0;
+      }
+
+      &:hover:after {
+        opacity: 1;
+      }
+
+      &.active:after {
+        opacity: 1;
       }
     }
   }
 
-  &-submit{
-    padding: 5px;
-    background: #4be071;
+  &-submit {
+    padding: 5px 10px;
     border-radius: 4px;
+    color: #FFFFFF;
+    background: #3DD28D;
+    width: 80px;
+    position: absolute;
+    top: 45%;
+
+    &:hover {
+      background: darken(#3DD28D, 10);
+    }
+
+    &Wrapper {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 15px;
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    margin: 10px 0;
   }
 }

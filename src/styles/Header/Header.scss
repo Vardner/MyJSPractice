@@ -2,20 +2,49 @@
   height: 60px;
   box-sizing: border-box;
   position: relative;
-  background: #D03042;
-  border-bottom: 3px #FFFFFF solid;
+
+  & .row {
+    height: 100%;
+  }
 
   & [class*="cell"], & .wrapper {
     height: 100%;
   }
 
   &-currentSize {
-    position: absolute;
-    right: 15px;
-    top: 5px;
+    position: relative;
+    margin-top: 10px;
     color: white;
-    text-decoration: underline;
     font-size: 14px;
+    padding: 10px;
+    min-width: 75px;
+    height: 40px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid rgba(255,255,255,.8);
+    display: inline-block;
+
+    &:after {
+      content: 'Window size';
+      color: #000;
+      background: #FFF;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 1px;
+      font-size: 13px;
+      font-family: Montserrat;
+      font-weight: bold;
+      line-height: 40px;
+      transition: all 0.3s ease-in;
+      opacity: 0;
+    }
+
+    &:hover:after {
+      opacity: 1;
+    }
   }
 
 }

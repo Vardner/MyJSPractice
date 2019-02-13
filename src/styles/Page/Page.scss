@@ -1,6 +1,6 @@
 .Page {
   position: relative;
-  overflow: auto;
+  overflow: hidden;
   height: calc(100% - 120px);
   z-index: 0;
   @include clearfix();
@@ -10,69 +10,57 @@
     height: 100%;
   }
 
+  & > [data-container="Main"] {
+    transition: all 0.4s;
+    perspective: 1000px;
+    perspective-origin: right;
+
+    @media screen and (max-width: 768px) {
+      perspective-origin: center;
+    }
+  }
+
+  & > .cell-none[data-container=Sidebar] {
+    width: 0;
+    display: inline-block;
+  }
+
+  & > [data-container=Sidebar] {
+    transition: width 0.4s;
+    perspective: 3000px;
+  }
+
   &-wrap {
     height: 100%;
     width: 100%;
     overflow-x: hidden;
+    position: relative;
   }
 
   &-content {
-    background: #471846;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     transition: all 0.4s ease;
-  }
+    padding: 20px 10px;
 
-  &-task {
-    &List {
-      max-width: 800px;
-      margin: auto;
-      padding: 25px 40px;
-      box-sizing: border-box;
-      font-size: 16px;
-
-      & p {
-        padding-bottom: 10px;
-      }
-
-      & label {
-        display: block;
-        position: relative;
-        padding-bottom: 10px;
-        @include clearfix();
-      }
-    }
-
-    &Item {
-      padding: 10px 0;
-      margin: auto;
-    }
-
-    &Title {
-      padding-bottom: 10px;
-      color: #4CE974;
-    }
-
-    &Text {
-      color: #FFF;
-      text-align: justify;
-
-      &--decorated {
-        color: #FF802B;
-        font-style: italic;
-        font-size: 18px;
-      }
-    }
-
-    &Input {
-      padding: 5px;
+    &:after {
+      content: '';
+      width: 2px;
+      position: absolute;
+      background-color: white;
       height: 100%;
-      border-radius: 3px;
-      display: block;
-      
-      @media (max-width: 374px) {
-        float: left;
+      top: 0;
+      right: calc(100% + 1px);
+    }
+
+    &.perspective {
+      transform: rotateY(-11deg);
+      transform-origin: right;
+
+      @media screen and (max-width: 768px) {
+        transform: rotateX(30deg) translateY(260px);
+        transform-origin: center;
       }
     }
   }

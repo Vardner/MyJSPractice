@@ -6,6 +6,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -13,21 +14,27 @@
 		<header class="Header">
 			<div class="wrapper">
 				<div class="row">
-					<div class="cell-6">
-						<div class="Button-wrap">
-							<div class="Button-sidebarToggle"></div>
+					<div class="cell-3">
+						<div class="Button-menuWrapper">
+							<i class="fas fa-bars Button-menu"></i>
 						</div>
 					</div>
-					<div class="cell-6">
-						<div class="Date">
-							<span class="Date-item">00</span>
-							<span class="Date-item Date-item--colon">:</span>
-							<span class="Date-item">00</span>
-							<span class="Date-item Date-item--colon">:</span>
-							<span class="Date-item">00</span>
-						</div>
-						<div class="Header-currentSize">
-							<span class="Header-text Header-text--small"></span>
+					<div class="cell-9">
+						<div class="row" data-container="UserInfo">
+							<div class="cell-6">
+								<div class="Header-currentSize">
+									<span class="Header-text Header-text--small"></span>
+								</div>
+							</div>
+							<div class="cell-6">
+								<div class="Date" data-date="Clock">
+									<span class="Date-item">00</span>
+									<span class="Date-item Date-item--colon">:</span>
+									<span class="Date-item">00</span>
+									<span class="Date-item Date-item--colon">:</span>
+									<span class="Date-item">00</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -87,15 +94,44 @@
 						<span>Homework_17</span>
 					</a>
 				</li>
-				<li class="Menu-item disabled" data-work="18">
+				<li class="Menu-item" data-work="18">
 					<a href="javascript:void(0)" class="Menu-link">
 						<span>Homework_18</span>
 					</a>
+					<ul class="Menu-sublist">
+						<li class="Menu-item" data-task="1">
+							<a class="Menu-link" href="javascript:void(0)">
+								<span>Infinite slider</span>
+							</a>
+						</li>
+						<li class="Menu-item" data-task="2">
+							<a class="Menu-link" href="javascript:void(0)">
+								<span>Students table</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="Menu-item disabled" data-work="19">
+					<a href="javascript:void(0)" class="Menu-link">
+						<span>Homework_19</span>
+					</a>
+				</li>
+				<li class="Menu-item" data-work="20">
+					<a href="javascript:void(0)" class="Menu-link">
+						<span>Homework_20</span>
+					</a>
+					<ul class="Menu-sublist">
+						<li class="Menu-item" data-task="1">
+							<a class="Menu-link" href="javascript:void(0)">
+								<span>Iteraction with Promises</span>
+							</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</header>
 		<div class="Page">
-			<div class="cell-none">
+			<div class="cell-none" data-container="Sidebar">
 				<aside class="Sidebar">
 					<nav class="Sidebar-content">
 						<ul class="Menu" id="Menu">
@@ -153,22 +189,50 @@
 									<span>Homework #17</span>
 								</a>
 							</li>
-							<li class="Menu-item disabled" data-work="18">
+							<li class="Menu-item" data-work="18">
 								<a class="Menu-link" href="javascript: void(0)">
 									<span>Homework #18</span>
 								</a>
+								<ul class="Menu-sublist">
+									<li class="Menu-item" data-task="1">
+										<a class="Menu-link" href="javascript:void(0)">
+											<span>Infinite slider</span>
+										</a>
+									</li>
+									<li class="Menu-item" data-task="2">
+										<a class="Menu-link" href="javascript:void(0)">
+											<span>Students table</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="Menu-item disabled" data-work="19">
+								<a class="Menu-link" href="javascript: void(0)">
+									<span>Homework #19</span>
+								</a>
+							</li>
+							<li class="Menu-item" data-work="20">
+								<a class="Menu-link" href="javascript: void(0)">
+									<span>Homework #20</span>
+								</a>
+								<ul class="Menu-sublist">
+									<li class="Menu-item" data-task="1">
+										<a class="Menu-link" href="javascript:void(0)">
+											<span>Interaction with Promises</span>
+										</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</nav>
 				</aside>
 			</div>
-			<div class="cell-12">
+			<div class="cell-12" data-container="Main">
 				<main id="Main" class="Page-content">
-					<div id="Content-area" class="Page-taskList">
-						<div class="Page-taskItem" >
-							<h4 class="Page-taskTitle">Примечания</h4>
-							<p class="Page-taskText">Все задачи из конкретного домашнего задания находятся в одном файле потому что на меня ругается плагин и не дает собрать файлы не видя функции.</p>
-							<p class="Page-taskText">Пока что некоторые функции можно вызвать только консолью.</p>
+					<div id="Content-area" class="Task">
+						<div class="Task-container">
+							<h4 class="Task-title">Welcome</h4>
+							<p class="Task-text">Надеюсь вам понравится, я старался.</p>
 						</div>
 					</div>
 				</main>
@@ -178,14 +242,7 @@
 			<div class="wrapper">
 				<div class="row">
 					<div class="cell-6">
-						<div class="Date">
-							<span class="Date-item"></span>
-							<span class="Date-item"></span>
-							<span class="Date-item"></span>
-					</div>
-					</div>
-					<div class="cell-6">
-						<div class="Date fl-r" id="Stopwatch">
+						<div class="Date fl-r" data-date="Stopwatch">
 							<span class="Date-item"></span>
 							<span class="Date-item--colon">:</span>
 							<span class="Date-item"></span>
@@ -193,11 +250,21 @@
 							<span class="Date-item"></span>
 						</div>
 					</div>
+					<div class="cell-6">
+						<div class="Date" data-date="Date">
+							<span class="Date-item"></span>
+							<span class="Date-item"></span>
+							<span class="Date-item"></span>
+						</div>
+					</div>
 				</div>
 			</div>
-		
 		</footer>
+		<div id="particles-js"></div>
 	</div>
+
 </body>
+<script src="../../node_modules/resize-sensor/ResizeSensor.min.js"></script>
+<script defer src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script defer src="../js/common.min.js"></script>
 </html>

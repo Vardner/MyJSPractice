@@ -1,18 +1,7 @@
 .Footer {
   height: 60px;
   box-sizing: border-box;
-  background: #D03042;
   position: relative;
-
-  &:after{
-    content: '';
-    height: 3px;
-    width: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-    background: $rainbowGradient;
-  }
 
   & [class *= 'cell'], & .row {
     height: 100%;

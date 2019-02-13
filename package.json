@@ -1,6 +1,6 @@
 {
   "author": "Yekaterinyn Yehor",
-  "name": "template",
+  "name": "Hillel Front-end Pro Homeworks",
   "version": "0.0.1",
   "devDependencies": {
     "grunt": "^1.0.3",
@@ -9,11 +9,12 @@
     "grunt-contrib-imagemin": "^3.0.0",
     "grunt-contrib-jshint": "^2.0.0",
     "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-uglify": "^4.0.0",
-    "grunt-contrib-uglify-es": "github:gruntjs/grunt-contrib-uglify#harmony",
+    "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-html-build": "^0.7.1",
-    "jshint-stylish": "^2.2.1"
+    "grunt-eslint": "^21.0.0",
+    "grunt-html-build": "^0.7.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "resize-sensor": "0.0.6"
+  }
 }

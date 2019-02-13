@@ -1,8 +1,23 @@
 .Sidebar {
-  overflow: auto;
-  border-right: 3px solid #438DD1;
-  background-image: url("../images/paralax-bg.jpg");
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 0;
   height: 100%;
+  position: relative;
+  z-index: 5;
+  background: rgba(51,51,51,0.8);
+  border-top-right-radius: 5px;
+  border-top: 1px solid rgba(255,255,255,.7);
+  border-bottom: 1px solid rgba(255,255,255,.7);
+  transition: all .4s, transform .7s ease;
+  transform: rotate3d(-1, .5, 0, 45deg) scale(0.7);
+
+
+  div:not(.cell-none) > &{
+    width: 100%;
+    transform: initial;
+    border-right: 1px solid rgba(255,255,255,.7);
+  }
 
   &-content {
     padding: 20px 20px;

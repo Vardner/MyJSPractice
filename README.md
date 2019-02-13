@@ -1,16 +1,13 @@
-**Base template layout**
+MyJSPractice
+Practical exercises from Hillel courses
 -
 
 Using technologies:
  - HTML
- - Less
+ - Sass
  - NPM
- - Grunt.js
+ - Pure js
  
-Browse:
- - `package.json`( your npm packages )
- - `/src/` ( folder development environment )
- - `/dist/` ( build path ) 
  
 Install:
  In root path enter command in terminal `npm i`

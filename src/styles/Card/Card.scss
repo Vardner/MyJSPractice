@@ -1,0 +1,16 @@
+.Card {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  border: 1px solid #FFF;
+
+  &-image {
+    margin-right: 15px;
+  }
+
+  &-box {
+    flex-direction: column;
+    justify-content: space-around;
+    display: flex;
+  }
+}

@@ -14,10 +14,6 @@
   display: flex;
   flex-wrap: wrap;
   @include clearfix();
-
-  .Header & {
-    height: 100%;
-  }
 }
 
 @for $i from 1 through 12 {
@@ -32,6 +28,8 @@
 
 .cell-none {
   display: none;
+  float: left;
+  position: relative;
 }
 
 @each $type, $size in (ms: '(min-width: 320px) and (max-width: 374px)',
@@ -49,25 +47,23 @@
         @include clearfix();
       }
     }
-  }
 
-}
+    @media #{$size} {
+      .cell-#{$type} {
+        width: 100%;
+        clear: both;
+        position: relative;
+      }
+    }
 
-@each $type, $size in (ms: '(min-width: 320px) and (max-width: 374px)',
-        mm: '(max-width: 424px)',
-        ml: '(max-width: 767px)',
-        tab: '(max-width: 1023px)',
-        lap: '(max-width: 1439px)') {
-  @media #{$size}{
-    .cell-#{$type} {
-      width: 100%;
+    @media #{$size} {
+      .cell-#{$type}-none {
+        display: none;
+      }
     }
   }
 }
 
-.cell-sm-none {
-  @media (max-width: 768px) {
-    display: none;
-  }
-}
+
+
 
