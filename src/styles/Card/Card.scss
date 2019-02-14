@@ -1,16 +1,30 @@
 .Card {
+  margin: 15px 0;
   display: flex;
   flex-direction: row;
   padding: 5px;
   border: 1px solid #FFF;
 
   &-image {
+    visibility: visible;
     margin-right: 15px;
+    transition: all 2s linear;
+    transform-origin: top left;
+
+    &.hidden {
+      transform: scale(0);
+    }
   }
 
   &-box {
     flex-direction: column;
     justify-content: space-around;
     display: flex;
+    transform-origin: top left;
+    transition: all 2s linear;
+
+    &.hidden {
+      transform: scale(0);
+    }
   }
 }

@@ -46,6 +46,8 @@ const HW_20 = {
         'Nothing to tell, just click the button and it will work'
       ];
 
+      let promiseAsyncButton;
+      let promiseSyncButton;
       let paragraph;
       let i;
 
@@ -67,6 +69,12 @@ const HW_20 = {
 
       task = this.renderTaskContent();
       taskContainer.appendChild(task);
+
+      promiseAsyncButton = document.querySelector('[data-control="promise-async"');
+      promiseSyncButton = document.querySelector('[data-control="promise-sync"');
+
+      promiseAsyncButton.addEventListener('click', this.startAsyncPromise.bind(this));
+
       this.taskItem = taskContainer;
     },
 
@@ -100,6 +108,7 @@ const HW_20 = {
 
       this.renderProgressBar(task);
       this.renderCardList(task);
+
       return task;
     },
 
@@ -162,16 +171,28 @@ const HW_20 = {
       return card;
     },
 
-    clearProgressBar () {
-      const progressBar = document.querySelector('[data-progress-bar=promises');
-      const clearProgressBar = progressBar.classList.toggle('empty');
-    },
-
     startAsyncPromise () {
-      const clearProgressBar = new Promise((resolve, reject) => {
-        this.clearProgressBar();
-        resolve();
-      });
+      const progressBar = document.querySelector('[data-progress-bar=promises');
+
+      progressBar.addEventListener('transitionend', startAsyncPromise);
+
+      toggleProgressBar();
+
+      function toggleProgressBar() {
+        progressBar.classList.toggle('empty');
+      }
+
+      function startAsyncPromise() {
+        const cards = document.querySelectorAll('.List-cards .Card');
+
+        [].forEach.call(cards, hideCard)
+      }
+
+      function hideCard(card) {
+        [].forEach.call(card.children, (el)=> {
+          el.classList.toggle('hidden');
+        });
+      }
     }
   },
 

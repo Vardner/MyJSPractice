@@ -5,9 +5,10 @@
   position: relative;
 
   &-bar {
+    width: 100%;
     height: 100%;
     background-color: #ff962a;
-    transition: width 4s linear;
+    transition: width 2s linear;
 
     .empty & {
       width: 0;
