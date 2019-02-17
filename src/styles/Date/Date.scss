@@ -10,6 +10,7 @@
   text-align: center;
   line-height: 20px;
   position: relative;
+  margin-top: 10px;
 
   &[data-date="Clock"] {
 
@@ -84,10 +85,6 @@
     &:hover:after {
       opacity: 1;
     }
-  }
-
-  header &{
-    margin-top: 10px;
   }
 
   &-item{

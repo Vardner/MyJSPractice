@@ -29,6 +29,8 @@ const HW_20 = {
 
     cardQuantity: 3,
 
+    isPromiseChainActive: false,
+
     render () {
       HW_18.clearContentContainer();
 
@@ -74,6 +76,7 @@ const HW_20 = {
       promiseSyncButton = document.querySelector('[data-control="promise-sync"');
 
       promiseAsyncButton.addEventListener('click', this.startAsyncPromise.bind(this));
+      promiseSyncButton.addEventListener('click', this.startSyncPromise.bind(this));
 
       this.taskItem = taskContainer;
     },
@@ -100,7 +103,6 @@ const HW_20 = {
 
         button.dataset.control = buttonTypes[i];
         button.innerText = buttonTypes[i];
-
 
         row.appendChild(mediaContainer);
         mediaContainer.appendChild(button);
@@ -148,7 +150,7 @@ const HW_20 = {
 
       let card = document.createElement('div');
       let cardImage = document.createElement('img');
-      let cardBox= document.createElement('div');
+      let cardBox = document.createElement('div');
       let cardTitle = document.createElement('h3');
       let cardText = document.createElement('p');
 
@@ -171,28 +173,153 @@ const HW_20 = {
       return card;
     },
 
-    startAsyncPromise () {
+    toggleProgressBar () {
       const progressBar = document.querySelector('[data-progress-bar=promises');
+      progressBar.classList.toggle('empty');
+    },
 
-      progressBar.addEventListener('transitionend', startAsyncPromise);
+    startAsyncPromise () {
+      if (!this.isPromiseChainActive) {
+        const progressBar = document.querySelector('[data-progress-bar=promises');
 
-      toggleProgressBar();
-
-      function toggleProgressBar() {
-        progressBar.classList.toggle('empty');
+        progressBar.addEventListener('transitionend', this.runAsyncPromiseChain.bind(this));
+        this.toggleProgressBar();
+        this.isPromiseChainActive = true;
       }
+    },
 
-      function startAsyncPromise() {
-        const cards = document.querySelectorAll('.List-cards .Card');
+    startSyncPromise () {
+      if (!this.isPromiseChainActive) {
+        const progressBar = document.querySelector('[data-progress-bar=promises');
 
-        [].forEach.call(cards, hideCard)
+        progressBar.addEventListener('transitionend', this.runSyncPromiseChain.bind(this));
+        this.toggleProgressBar();
+        this.isPromiseChainActive = true;
       }
+    },
 
-      function hideCard(card) {
-        [].forEach.call(card.children, (el)=> {
-          el.classList.toggle('hidden');
+    runAsyncPromiseChain () {
+      const cards = document.querySelectorAll('.List-cards .Card');
+      const cardList = document.querySelector('.List-cards');
+      const progressBar = document.querySelector('[data-progress-bar=promises');
+      const newProgressBar = progressBar.cloneNode(true);
+
+      const cardsChain = new Promise((resolve) => {
+        [].forEach.call(cards, this.hideCard.bind(this));
+        cardList.addEventListener('transitionend', resolve);
+      });
+
+      const resetTask = cardsChain.then(
+          () => {
+            progressBar.parentElement.replaceChild(newProgressBar, progressBar);
+
+            return new Promise(
+                resolve => {
+                  setTimeout(
+                      () => {
+                        this.toggleProgressBar();
+                        newProgressBar.addEventListener('transitionend', resolve);
+                      }, 0);
+                });
+          })
+          .then(
+              () => {
+                this.showCards();
+              }
+          );
+    },
+
+    runSyncPromiseChain () {
+      const cards = document.querySelectorAll('.List-cards .Card');
+      const cardList = document.querySelector('.List-cards');
+      const progressBar = document.querySelector('[data-progress-bar=promises');
+      const newProgressBar = progressBar.cloneNode(true);
+      const self = this;
+      let i;
+
+      (async function () {
+        for (i = 0; i < cards.length; i++) {
+          await self.hideCard(cards[i]);
+        }
+
+        return Promise.resolve();
+      })()
+          .then(
+              () => {
+                progressBar.parentElement.replaceChild(newProgressBar, progressBar);
+
+                return new Promise(
+                    resolve => {
+                      setTimeout(
+                          () => {
+                            this.toggleProgressBar();
+                            newProgressBar.addEventListener('transitionend', resolve);
+                          }, 0);
+                    });
+              }
+          )
+          .then(
+              () => {
+                this.showCards();
+                this.isPromiseChainActive = false;
+              }
+          );
+
+    },
+
+    async hideCard (card) {
+      const cardElements = card.children;
+      let isPromiseChainEnd = false;
+
+      const hideCardImage = new Promise(resolve => {
+        let currentItem = 0;
+        cardElements[currentItem].classList.toggle('hidden');
+        cardElements[currentItem].addEventListener('transitionend', (e) => {
+          e.stopPropagation();
+          resolve(currentItem);
         });
-      }
+      });
+
+      const hideCardText = hideCardImage.then(
+          result => {
+            result++;
+            cardElements[result].classList.toggle('hidden');
+            return new Promise((resolve) => {
+              cardElements[result].addEventListener('transitionend', (e) => {
+                e.stopPropagation();
+                resolve();
+              });
+            });
+          }
+      );
+
+      const hideCard = await hideCardText.then(
+          () => {
+            card.classList.toggle('hidden');
+
+            return new Promise(
+                (resolve) => {
+                  card.addEventListener('transitionend',
+                      () => {
+                        isPromiseChainEnd = true;
+                        resolve();
+                      }
+                  );
+                }
+            );
+          }
+      );
+
+      return Promise.resolve();
+    },
+
+    showCards () {
+      const cards = document.querySelectorAll('.List-cards .Card');
+      [].forEach.call(cards, (card) => {
+        card.classList.remove('hidden');
+        [].forEach.call(card.children, (cardChildElement) => cardChildElement.classList.remove('hidden'));
+      });
+      this.isPromiseChainActive = false;
     }
   },
 

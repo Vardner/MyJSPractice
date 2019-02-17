@@ -4,6 +4,12 @@
   flex-direction: row;
   padding: 5px;
   border: 1px solid #FFF;
+  transition: transform 2s linear;
+  transform-origin: top left;
+
+  &.hidden {
+    transform: scale(0);
+  }
 
   &-image {
     visibility: visible;

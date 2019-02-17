@@ -14,12 +14,26 @@
 		<header class="Header">
 			<div class="wrapper">
 				<div class="row">
-					<div class="cell-3">
-						<div class="Button-menuWrapper">
-							<i class="fas fa-bars Button-menu"></i>
+					<div class="cell-5">
+						<div class="row">
+							<div class="cell-5">
+								<div class="Button-menuWrapper">
+									<i class="fas fa-bars Button-menu"></i>
+								</div>
+							</div>
+							<div class="cell-7">
+								<div class="Header-weather" data-container="city-weather">
+									<i class="fas fa-cloud-sun Header-weatherIcon"></i>
+									<form action="#" method="get" class="Header-weatherForm" data-form="city-weather">
+										<input type="text" class="Header-weatherInput" data-input="cities-search-weather">
+										<input type="image" class="Header-weatherSubmit" src="../images/icons/loupe.png">
+									</form>
+								</div>
+							</div>
 						</div>
+					
 					</div>
-					<div class="cell-9">
+					<div class="cell-7">
 						<div class="row" data-container="UserInfo">
 							<div class="cell-6">
 								<div class="Header-currentSize">
@@ -265,6 +279,7 @@
 
 </body>
 <script src="../../node_modules/resize-sensor/ResizeSensor.min.js"></script>
-<script defer src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script defer src="../js/common.min.js"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCZHoF-AuS_pG3b_VNo8NW0s4CpnOJBFg&libraries=places&callback=activateCitiesAutocomplete"></script>
 </html>

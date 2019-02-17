@@ -85,13 +85,13 @@ module.exports = function (grunt) {
       //Scripts change
       scripts: {
         files: ['src/**/*.js'],
-        tasks: ['eslint','uglify:dev']
+        tasks: ['uglify:dev']
 
       },
       //Less files change
       css: {
         files: ['src/**/*.scss'],
-        tasks: ['sass', 'autoprefixer']
+        tasks: ['autoprefixer', 'sass']
       },
       //HTML files change
       html: {

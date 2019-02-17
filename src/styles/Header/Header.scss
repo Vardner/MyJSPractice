@@ -1,3 +1,17 @@
+%Header-infoContainer {
+  position: relative;
+  margin-top: 10px;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  min-width: 75px;
+  height: 40px;
+  text-align: center;
+  line-height: 20px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  display: inline-block;
+}
+
 .Header {
   height: 60px;
   box-sizing: border-box;
@@ -11,18 +25,74 @@
     height: 100%;
   }
 
-  &-currentSize {
+  &-weather {
+    @extend %Header-infoContainer;
+    border: none;
+    padding: 0;
     position: relative;
-    margin-top: 10px;
-    color: white;
-    font-size: 14px;
-    padding: 10px;
-    min-width: 75px;
-    height: 40px;
-    text-align: center;
-    line-height: 20px;
-    border: 1px solid rgba(255,255,255,.8);
-    display: inline-block;
+    transition: all .3s ease-out;
+    cursor: pointer;
+
+    &Icon {
+      width: 100%;
+      cursor: pointer;
+      line-height: 38px;
+      transition: all .5s ease-out;
+      transform: scaleX(1);
+      visibility: visible;
+      opacity: 1;
+      transform-origin: right;
+      border: 1px solid rgba(255, 255, 255, .8);
+
+      &:hover {
+        background-color: #FFF;
+        color: #000;
+      }
+
+      .active & {
+        visibility: hidden;
+        opacity: 0;
+        transform: scaleX(0);
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+
+    &Form {
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transform-origin: left;
+      position: absolute;
+      transition: all 0.5s ease-out, visibility 0s;
+      height: 100%;
+      transform: scaleX(0);
+      border: 1px solid rgba(255, 255, 255, .8);
+
+      .active & {
+        position: static;
+        transform: scaleX(1);
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    &Input {
+      height: 100%;
+      background: transparent;
+      padding-left: 10px;
+      color: #fff;
+      text-overflow: ellipsis;
+
+      @include placeholder(#fff)
+    }
+  }
+
+  &-currentSize {
+    @extend %Header-infoContainer;
 
     &:after {
       content: 'Window size';
@@ -46,6 +116,24 @@
       opacity: 1;
     }
   }
-
 }
 
+.pac-container {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-top: none;
+
+  .pac-item {
+    transition: all 0.3s ease;
+    color: #fff;
+
+    &:hover {
+      color: #000;
+      background: #fdfdfd;
+    }
+  }
+
+  .pac-item-query {
+    color: inherit;
+  }
+}
