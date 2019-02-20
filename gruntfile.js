@@ -52,7 +52,7 @@ module.exports = function (grunt) {
           update: true
         },
         files: {                         // Dictionary of files
-          'dist/css/style.css': 'src/styles/style.scss'
+          './dist/css/style.css': './src/styles/style.scss'
         }
       }
     },
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
     htmlbuild: {
       dev: {
         src: 'src/views/*.html',
-        dest: 'dist/html/',
+        dest: 'dist/',
         options: {
           basePath: 'src/views/'
         }
@@ -91,7 +91,7 @@ module.exports = function (grunt) {
       //Less files change
       css: {
         files: ['src/**/*.scss'],
-        tasks: ['autoprefixer', 'sass']
+        tasks: ['sass', 'autoprefixer']
       },
       //HTML files change
       html: {

@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="Page-wrap">
@@ -26,7 +26,7 @@
 									<i class="fas fa-cloud-sun Header-weatherIcon"></i>
 									<form action="#" method="get" class="Header-weatherForm" data-form="city-weather">
 										<input type="text" class="Header-weatherInput" data-input="cities-search-weather">
-										<input type="image" class="Header-weatherSubmit" src="../images/icons/loupe.png">
+										<input type="image" class="Header-weatherSubmit" src="images/icons/loupe.png">
 									</form>
 								</div>
 							</div>
@@ -276,10 +276,10 @@
 		</footer>
 		<div id="particles-js"></div>
 	</div>
-
+	<div id="shadow" class="shadow"></div>
 </body>
-<script src="../../node_modules/resize-sensor/ResizeSensor.min.js"></script>
+<script src="js/ResizeSensor.min.js"></script>
 <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script defer src="../js/common.min.js"></script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCZHoF-AuS_pG3b_VNo8NW0s4CpnOJBFg&libraries=places&callback=activateCitiesAutocomplete"></script>
+<script defer src="js/common.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCZHoF-AuS_pG3b_VNo8NW0s4CpnOJBFg&libraries=places&language=en&callback=activateCitiesAutocomplete"></script>
 </html>

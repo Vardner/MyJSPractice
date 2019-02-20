@@ -4,11 +4,12 @@
   flex-direction: row;
   padding: 5px;
   border: 1px solid #FFF;
-  transition: transform 2s linear;
+  transition: max-height 1.5s linear;
   transform-origin: top left;
+  max-height: 200px;
 
   &.hidden {
-    transform: scale(0);
+    max-height: 0;
   }
 
   &-image {

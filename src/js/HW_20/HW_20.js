@@ -10,9 +10,9 @@ const HW_20 = {
     taskItem: '',
 
     images: [
-      '../images/Cats-cards/Card-image1.jpg',
-      '../images/Cats-cards/Card-image2.jpg',
-      '../images/Cats-cards/Card-image3.jpg'
+      'images/Cats-cards/Card-image1.jpg',
+      'images/Cats-cards/Card-image2.jpg',
+      'images/Cats-cards/Card-image3.jpg'
     ],
 
     titles: [
@@ -144,7 +144,7 @@ const HW_20 = {
       container.appendChild(cardList);
     },
 
-    createCard (image = '../../images/No-image-available.jpg',
+    createCard (image = 'images/No-image-available.jpg',
                 title = '',
                 description = 'Here must be description, but something gone wrong') {
 
@@ -237,7 +237,7 @@ const HW_20 = {
       const self = this;
       let i;
 
-      (async function () {
+      (async function A () {
         for (i = 0; i < cards.length; i++) {
           await self.hideCard(cards[i]);
         }
