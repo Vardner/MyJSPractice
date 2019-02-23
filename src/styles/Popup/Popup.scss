@@ -1,0 +1,41 @@
+.Popup {
+  position: fixed;
+  color: #fff;
+  font-size: 14px;
+  max-height: 400px;
+  background: rgba(51,51,51,.8);
+  padding: 25px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  min-width: 320px;
+  top: calc(50% - 200px);
+  transition: opacity .3s ease-in,visibility 0s;
+  visibility: hidden;
+  opacity: 0;
+  left: calc(50% - 200px);
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &-closeButton {
+    width: 25px;
+    height: 25px;
+    background: transparent;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    & svg {
+      fill: #fff;
+      border-radius: 50%;
+      
+      &:hover {
+        fill: #000;
+        background: #fff;
+      }
+    }
+  }
+}

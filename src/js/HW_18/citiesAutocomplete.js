@@ -13,7 +13,7 @@ class WeatherTable {
     table.appendChild(tbody);
 
     options.forEach((el) => {
-      if (weatherObject[el]) {
+      if (weatherObject[el] !== undefined) {
         tr = document.createElement('tr');
         th = document.createElement('th');
         td = document.createElement('td');
@@ -56,19 +56,25 @@ class Popup {
                  shadowType = 'transparent', // transparent / night types - string
                  closeButton = true, // add close button to top left corner of popup - boolean
                  closeText = false, // add text for left, if text exist set text - string
+                 popupName = 'popup', // string associated with popup
                  popupClass = 'Popup', // moduleName for popup - string
                  popupCaption = '', // Popup heading - string
                  customBody = false, // send custom body to popup - boolean
                  bodyElement = null, // custom body - html element
                }) {
+    if (document.querySelector(`[data-popup=${popupName}]`)) {
+      document.querySelector(`[data-popup=${popupName}]`).remove();
+    }
+
     let shadow;
     let popupTitle;
     let popupCloseText;
     let popupCloseButton;
     const popup = document.createElement('div');
+    document.body.appendChild(popup);
 
     popup.className = popupClass;
-    popup.dataset.popup = 'popup';
+    popup.dataset.popup = '' + popupName;
 
     if (shadowID) {
       shadow = document.getElementById(shadowID);
@@ -87,9 +93,10 @@ class Popup {
       closeButtonIcon = this.constructor.toHTML(closeButtonIcon);
       popupCloseButton = document.createElement('button');
       popupCloseButton.className = popupClass + '-closeButton';
-      popupCloseButton.dataset.popup = 'close';
+      popupCloseButton.dataset.popupClose = '' + popupName;
       popupCloseButton.appendChild(closeButtonIcon);
       popup.appendChild(popupCloseButton);
+      popupCloseButton.addEventListener('click', this.closeCurrentPopup);
     }
 
     if (customBody && this.constructor.isHTML(bodyElement)) {
@@ -103,9 +110,13 @@ class Popup {
       popupCloseText.dataset.popup = 'close';
     }
 
-    document.body.appendChild(popup);
-
     return popup;
+  }
+
+  closeCurrentPopup (e) {
+    const popupName = e.currentTarget.dataset.popupClose;
+    const popup = e.currentTarget.closest(`[data-popup=${popupName}`);
+    popup.classList.remove('active');
   }
 
   static isHTML (element) {
@@ -127,6 +138,8 @@ class Popup {
 
 function activateCitiesAutocomplete () {
   const input = document.querySelector('[data-input=cities-search-weather]');
+  const lastSearchCity = localStorage.getItem('lastWeatherSearchCity');
+  const lastSearchGeometry = localStorage.getItem('lastWeatherSearchGeometry');
 
   const options = {
     types: ['(cities)'],
@@ -139,7 +152,10 @@ function activateCitiesAutocomplete () {
   autocomplete.addListener('place_changed', () => {
     const place = autocomplete.getPlace();
     input.geometry = `${place.geometry.location.lat()},${place.geometry.location.lng()}`;
-  })
+  });
+
+  input.value = localStorage.getItem('lastWeatherSearchCity');
+  input.geometry = localStorage.getItem('lastWeatherSearchGeometry');
 }
 
 (function activateWeatherSearch () {
@@ -161,12 +177,12 @@ function showWeatherSearchForm (e) {
 
 function validateCityText () {
   const input = document.querySelector('[data-input="cities-search-weather"');
-  const re = /^[a-z, ]*$/i;
+  const re = /^[a-z, .-]*$/i;
+  const errorMessage = document.createElement('span');
+  errorMessage.className = 'Header-weatherError';
 
   if (!re.test(input.value)) {
-    const errorMessage = document.createElement('span');
-    errorMessage.className = 'Header-weatherError';
-    errorMessage.innerHTML = 'English only!';
+    errorMessage.innerHTML = 'English letters only!';
     input.parentElement.appendChild(errorMessage);
     setTimeout(() => input.parentElement.removeChild(errorMessage), 4000);
     return false
@@ -181,13 +197,19 @@ function getForecast (e) {
   if (validateCityText()) {
     const input = document.querySelector('[data-input=cities-search-weather]');
     const place = input.value;
-    const geometry = input.geometry;
-    console.dir(input);
+    let searchGeometry = input.geometry;
+    let searchCity = place.trim().split(' ', 1).join().split(',', 1).pop();
 
-    fetch(`https://api.apixu.com/v1/current.json?key=3188df048e8949a397b180202191902&q=${geometry}`)
+    fetch(`https://api.apixu.com/v1/current.json?key=3188df048e8949a397b180202191902&q=${searchGeometry ? searchGeometry : searchCity}`)
         .then(
             response => {
               if (response.ok) {
+                input.value = '';
+                input.geometry = '';
+
+                localStorage.setItem('lastWeatherSearchCity', place);
+                localStorage.setItem('lastWeatherSearchGeometry', searchGeometry);
+
                 return response.json();
               } else {
                 throw Error(response.statusText);
@@ -201,7 +223,7 @@ function getForecast (e) {
         )
         .catch(
             error => {
-              console.log(error);
+              alert(`Somehow, your incorrect text pass form validation, but server smarter and he return error. Error code is - ${error.message}`);
             }
         )
 
@@ -229,7 +251,10 @@ function renderWeatherPopup (place, data) {
   weatherPopup = new Popup({
     shadowID: 'shadow',
     customBody: true,
+    popupName: 'forecast',
     bodyElement: weatherBlock
   });
+
+  setTimeout(() => weatherPopup.classList.add('active'), 10);
 }
 
