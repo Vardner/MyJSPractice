@@ -124,14 +124,14 @@ class Popup {
       return element instanceof HTMLElement;
     }
     catch (e) {
-      return (typeof obj === "object") &&
-          (element.nodeType === 1) && (typeof element.style === "object") &&
-          (typeof element.ownerDocument === "object");
+      return (typeof obj === 'object') &&
+          (element.nodeType === 1) && (typeof element.style === 'object') &&
+          (typeof element.ownerDocument === 'object');
     }
   }
 
   static toHTML (string) {
-    const container = new DOMParser().parseFromString(string, "text/xml");
+    const container = new DOMParser().parseFromString(string, 'text/xml');
     return container.firstChild;
   }
 }

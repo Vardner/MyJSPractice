@@ -32,7 +32,7 @@ const HW_20 = {
     isPromiseChainActive: false,
 
     render () {
-      HW_18.clearContentContainer();
+      HW_20.clearContentContainer();
 
       const renderArea = document.getElementById('Content-area');
       let task;
@@ -182,7 +182,7 @@ const HW_20 = {
       if (!this.isPromiseChainActive) {
         const progressBar = document.querySelector('[data-progress-bar=promises');
 
-        progressBar.addEventListener('transitionend', this.runAsyncPromiseChain.bind(this));
+        progressBar.addEventListener('transitionend', this.runAsyncPromiseChain.bind(this), {once: true});
         this.toggleProgressBar();
         this.isPromiseChainActive = true;
       }
@@ -192,7 +192,7 @@ const HW_20 = {
       if (!this.isPromiseChainActive) {
         const progressBar = document.querySelector('[data-progress-bar=promises');
 
-        progressBar.addEventListener('transitionend', this.runSyncPromiseChain.bind(this));
+        progressBar.addEventListener('transitionend', this.runSyncPromiseChain.bind(this), {once: true});
         this.toggleProgressBar();
         this.isPromiseChainActive = true;
       }
@@ -206,7 +206,7 @@ const HW_20 = {
 
       const cardsChain = new Promise((resolve) => {
         [].forEach.call(cards, this.hideCard.bind(this));
-        cardList.addEventListener('transitionend', resolve);
+        cardList.addEventListener('transitionend', resolve, {once: true});
       });
 
       const resetTask = cardsChain.then(
@@ -218,7 +218,7 @@ const HW_20 = {
                   setTimeout(
                       () => {
                         this.toggleProgressBar();
-                        newProgressBar.addEventListener('transitionend', resolve);
+                        newProgressBar.addEventListener('transitionend', resolve, {once: true});
                       }, 0);
                 });
           })
@@ -237,7 +237,7 @@ const HW_20 = {
       const self = this;
       let i;
 
-      (async function A () {
+      (async function () {
         for (i = 0; i < cards.length; i++) {
           await self.hideCard(cards[i]);
         }
@@ -253,7 +253,7 @@ const HW_20 = {
                       setTimeout(
                           () => {
                             this.toggleProgressBar();
-                            newProgressBar.addEventListener('transitionend', resolve);
+                            newProgressBar.addEventListener('transitionend', resolve, {once: true});
                           }, 0);
                     });
               }
@@ -277,7 +277,7 @@ const HW_20 = {
         cardElements[currentItem].addEventListener('transitionend', (e) => {
           e.stopPropagation();
           resolve(currentItem);
-        });
+        }, {once: true});
       });
 
       const hideCardText = hideCardImage.then(
@@ -288,7 +288,7 @@ const HW_20 = {
               cardElements[result].addEventListener('transitionend', (e) => {
                 e.stopPropagation();
                 resolve();
-              });
+              }, {once: true});
             });
           }
       );
@@ -305,8 +305,7 @@ const HW_20 = {
                         resolve();
                       }
                   );
-                }
-            );
+                }, {once: true});
           }
       );
 

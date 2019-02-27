@@ -128,7 +128,7 @@ function renderHW_16 (e) {
   let taskNumber;
 
   // Validate item link
-  if (task.classList.contains('disabled') || task.parentElement.classList.contains("Menu")) {
+  if (task.classList.contains('disabled') || task.parentElement.classList.contains('Menu')) {
     return;
   }
 
