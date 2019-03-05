@@ -87,6 +87,36 @@
     }
   }
 
+  &--snackbarReject {
+    height: auto;
+    background: #416dea;
+    color: #fff;
+    min-height: initial;
+    padding: 5px 10px;
+    border-radius: 2px;
+    transition: all .3s;
+
+    &:hover {
+      background: #0062d2;
+      color: #fff;
+    }
+  }
+
+  &--snackbarResolve {
+    height: auto;
+    background: #cb1613;
+    color: #fff;
+    min-height: initial;
+    padding: 5px 10px;
+    border-radius: 2px;
+    transition: all .3s;
+
+    &:hover {
+      background: #ad1c05;
+      color: #fff;
+    }
+  }
+
   @media screen and (max-width: 425px) {
     margin: 10px 0;
   }
