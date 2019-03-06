@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Vitya",
+    "age": "20",
+    "specialization": "back-end",
+    "year": "3",
+    "website": "yandex",
+    "phone": "(098) 342 43-23"
+  },
+  {
+    "name": "Dima",
+    "age": "18",
+    "specialization": "android",
+    "year": "2",
+    "website": "github",
+    "phone": "(067) 532 54-65"
+  },
+  {
+    "name": "Alexandr",
+    "age": "21",
+    "specialization": "ios",
+    "year": "4",
+    "website": "prom",
+    "phone": "(056) 643 02-35"
+  },
+  {
+    "name": "Marina",
+    "age": "22",
+    "specialization": "web design",
+    "year": "5",
+    "website": "agronet",
+    "phone": "(068) 263 63-45"
+  }
+]

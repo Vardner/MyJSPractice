@@ -1,0 +1,62 @@
+.ExposureMenu {
+  grid-area: menu-hz;
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+
+  &--vertical {
+    grid-area: menu-vt;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    padding-left: 10px;
+  }
+
+  &-item {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .ExposureMenu--vertical & {
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+
+    .ExposureMenu--vertical .ExposureMenu-subMenu &{
+      margin-left: 15px;
+    }
+
+    &Text {
+      display: inline-block;
+      padding: 10px;
+      transition: .2s;
+      white-space: nowrap;
+      border-radius: 3px;
+      cursor: pointer;
+      background-color: rgba(255,255,255, .8);
+      color: #000;
+
+      &:hover {
+        background-color: #696969;
+        color: #fff;
+      }
+    }
+  }
+
+  &-subMenu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 10px);
+    align-items: flex-start;
+
+    .ExposureMenu--vertical & {
+      padding-top: 10px;
+      flex-direction: column;
+      position: relative;
+      top: 0;
+    }
+  }
+}

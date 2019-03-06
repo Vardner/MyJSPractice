@@ -1,0 +1,17 @@
+.Exposure {
+  grid-area: exposure;
+
+  &-title {
+    padding-bottom: 15px;
+    text-align: center;
+  }
+
+  &-image {
+    width: 100%;
+    height: auto;
+
+    &Container {
+      width: 100%;
+    }
+  }
+}

@@ -136,7 +136,7 @@ class Popup {
   }
 }
 
-function activateCitiesAutocomplete () {
+function activateAutocomplete () {
   const input = document.querySelector('[data-input=cities-search-weather]');
   const lastSearchCity = localStorage.getItem('lastWeatherSearchCity');
   const lastSearchGeometry = localStorage.getItem('lastWeatherSearchGeometry');

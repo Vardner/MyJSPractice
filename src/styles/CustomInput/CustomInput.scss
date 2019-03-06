@@ -1,0 +1,104 @@
+.CustomInput {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+
+  &-input {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    font-size: 16px;
+    background: transparent;
+    padding: 5px 0;
+    border-bottom: 1px white solid;
+  }
+
+  &-bar {
+    z-index: 3;
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: #4d88f2;
+    transition: transform .15s linear;
+    transform-origin: center;
+    transform: scaleX(0);
+
+    .is-focused > & {
+      transform: scaleX(1);
+    }
+  }
+
+  &-label {
+    position: absolute;
+    bottom: 5px;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 1rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    line-height: 1;
+    transform-origin: top left;
+    transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+
+    .is-focused > & {
+      color: #4d88f2;
+      transform: translate(0, -16px) scale(0.75);
+    }
+
+    .is-filled & {
+      transform: translate(0, -16px) scale(0.75);
+    }
+  }
+
+  &-submit {
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    background: transparent;
+    color: #fff;
+    z-index: 2;
+    text-transform: uppercase;
+    width: 60px;
+    height: 60px;
+
+    &:after{
+      content: "";
+      z-index: 1;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      background: linear-gradient(to bottom, #c5ff17 0%, #69de25 15%, #08cc08 35%, #0fd40f 100%);
+      animation: rotateMe 2.5s infinite cubic-bezier(.27,.64,.76,.87);
+    }
+
+    &Text {
+      border-radius: 50%;
+      display: flex;
+      width: 90%;
+      margin: 0 auto;
+      height: 90%;
+      background-color: #fff;
+      color: #000;
+      font-weight: bold;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+      transition: .3s;
+    }
+  }
+}
+
+@keyframes rotateMe {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

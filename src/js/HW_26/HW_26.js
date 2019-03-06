@@ -5,6 +5,74 @@ const tabletMenuWork26 = $('#Menu--tablet').find('li[data-work="26"]');
 defaultMenuWork26.on('click', renderHW_26);
 tabletMenuWork26.on('click', renderHW_26);
 
+function createCustomInput ({
+                              type = text,
+                              placeholder = '',
+                              value = '',
+                              label = false,
+                              inputClass = 'CustomInput',
+                              name,
+                              autocomplete = 'off',
+                              required = false
+                            }) {
+  const inputWrapper = $(document.createElement('div'));
+  const activeBar = $(document.createElement('div'));
+  let submitText;
+  let labelElement;
+  let input = $(document.createElement('input'));
+
+  inputWrapper.addClass(inputClass);
+  activeBar.addClass(inputClass + '-bar');
+
+  if (type === 'submit') {
+    input = $(document.createElement('button'));
+    submitText = $(document.createElement('span')).appendTo(input);
+    submitText.text(value);
+    submitText.addClass('CustomInput-submitText');
+    input.attr('type','submit');
+    input.addClass('CustomInput-submit');
+    input.appendTo(inputWrapper);
+    return inputWrapper;
+  }
+
+  if (label) {
+    labelElement = $(document.createElement('span')).addClass(inputClass + '-label').text(label).appendTo(inputWrapper);
+  }
+
+  input.appendTo(inputWrapper);
+  input.addClass(inputClass + '-input');
+  input.attr('placeholder', placeholder);
+  input.attr('type', type);
+  input.attr('autocomplete', autocomplete);
+  input.attr('value', value);
+
+  input.on({
+    focus: () => inputWrapper.addClass('is-focused'),
+    blur: () => inputWrapper.removeClass('is-focused'),
+    keyup: () => {
+      if(input.val().length) {
+        inputWrapper.addClass('is-filled');
+      } else {
+        inputWrapper.removeClass('is-filled');
+      }
+    }
+  });
+
+  activeBar.appendTo(inputWrapper);
+
+  if (typeof name === 'string') {
+    input.attr('name', name);
+  } else {
+    throw new Error('Input TypeError: missing required name parameter');
+  }
+
+  if (required) {
+    input.attr('_required', '');
+  }
+
+  return inputWrapper;
+}
+
 function renderHW_26 (e) {
   const task = e.target.closest('li.Menu-item');
   let taskNumber;
@@ -18,7 +86,7 @@ function renderHW_26 (e) {
 
   switch (taskNumber) {
     case 1:
-      HW_18.task1.render();
+      HW_26.task1.render();
       break;
 
     default:
@@ -85,7 +153,7 @@ class SnackBar {
     if (this.progressBar === undefined && this.keepAlive !== false) {
       setTimeout(this.hide, this.keepAlive);
     } else {
-      this.progressBar.css('transition',`width ${this.keepAlive || 4000}ms linear`).css('width', '0');
+      this.progressBar.css('transition', `width ${this.keepAlive || 4000}ms linear`).css('width', '0');
       this.progressBar.on('transitionend', this.hide);
     }
   }
@@ -109,6 +177,13 @@ class EventEmitter {
   // Add custom event and his function listener
   // event - string, listener - function
   on (event, listener, context) {
+    if (context === undefined) {
+      throw new Error('EventEmiter TypeError: missing required context parameter');
+    }
+
+    if (typeof context !== 'object') {
+      throw new Error('EventEmiter InputError: required context parameter has invalid type');
+    }
     (this._events[event] || (this._events[event] = [])).push(listener.bind(context));
   }
 
@@ -124,36 +199,66 @@ class EventEmitter {
 }
 
 class StudentsModel extends EventEmitter {
-  constructor (students) {
+  constructor (
+                 students = []
+               ) {
     super();
-    this._students = students || [];
+    this._students = students;
+
+    let uniqueID = 0;
+
+    this.constructor.generateUniqueId = function () {
+      return uniqueID++;
+    }
   }
 
   get studentsList () {
     return this._students;
   }
 
-  addStudent (student) {
-    this._students.unshift(student);
-    this._students.forEach((student, index) => {
-      student.index = index + 1;
-    });
-    this.emit('studentAdded', student)
+  uploadData (xhr) {
+    if (typeof xhr === 'string') {
+      $.ajax({
+        url: xhr,
+        method: 'GET',
+        context: this,
+        success: response => {
+          response.forEach(student => {
+            this.addStudent(student);
+          });
+        },
+        error: error => {
+          console.log(error);
+        }
+      });
+    }
   }
 
-  deleteStudent (index) {
-    // Context - model
-    this._students.splice(index - 1, 1);
-    this.emit('studentDeleted', index);
+  addStudent (student) {
+    student._studentId = this.constructor.generateUniqueId();
+    this._students.push(student);
+    this.emit('studentAdded', student);
+  }
+
+  deleteStudent (id) {
+    this._students.forEach((el, i, list) => {
+      if (el.studentId === id) {
+        list.splice(i, 1);
+        this.emit('studentDeleted', index);
+        return;
+      }
+    });
+
+    throw new Error('Model ReferenceError: reference to a non-existent student ID');
   }
 }
 
 class StudentsView extends EventEmitter {
-  constructor (model) {
+  constructor () {
     super();
-    this._model = model;
     this._elements = {};
     this._icons = {};
+    this._timeouts = {};
     this._confirms = {};
     this._elements.form = this.constructor.createAddForm();
     this._elements.table = this.constructor.createTable.call(this);
@@ -170,7 +275,53 @@ class StudentsView extends EventEmitter {
     return this._elements.table;
   }
 
-  enableFormActions () {
+  renderForm (container) {
+    let containerElement;
+    if (container instanceof HTMLElement) {
+      $(this._elements.form).appendTo(container);
+    } else {
+      containerElement = $(container);
+
+      if (containerElement.length) {
+        $(this._elements.form).appendTo(containerElement.length === 1
+            ? containerElement
+            : document.querySelector(container));
+      }
+    }
+
+    this.constructor.enableFormActions.call(this);
+  }
+
+  renderTable (container) {
+    let containerElement;
+    if (container instanceof HTMLElement) {
+      $(this._elements.table).appendTo(container);
+      return;
+    }
+
+    containerElement = $(container);
+
+    if (containerElement.length) {
+      $(this._elements.table).appendTo(containerElement.length === 1
+          ? containerElement
+          : document.querySelector(container));
+    }
+  }
+
+  addStudent (studentObj) {
+    clearTimeout(this._timeouts.addStudent);
+    const newStudentTR = this.constructor.createStudentTR.call(this, studentObj);
+    this._elements.list.prepend(newStudentTR);
+    this._timeouts.addStudent = setTimeout(this.constructor.updateIndexes.call(this), 100);
+  }
+
+  removeStudent (index) {
+    const studentsNotes = this._elements.list.children();
+    studentsNotes[index - 1].remove();
+    this.constructor.updateIndexes.call(this);
+  }
+
+  static enableFormActions () {
     this._elements.form.submit(
         (e) => {
           e.preventDefault();
@@ -178,57 +329,63 @@ class StudentsView extends EventEmitter {
         });
   }
 
-  addStudentToTable (studentObj) {
-    const newStudentTR = this.constructor.createStudentTR.call(this, studentObj);
-    this._elements.list.prepend(newStudentTR);
-    this.constructor.updateStudentsIndexes.call(this);
-  }
-
-  removeStudentFromTable (index) {
-    const studentsNotes = this._elements.list.children();
-    studentsNotes[index - 1].remove();
-    this.constructor.updateStudentsIndexes.call(this);
-  }
-
   static createAddForm () {
     const form = $('<form/>', {
       method: 'POST',
       class: 'Task-addStudentForm'
     });
-    const nameInput = $('<input/>', {
-      type: 'text',
-      name: 'name',
-      placeholder: 'Enter your first and last name'
-    }).appendTo(form);
-    const ageInput = $('<input/>', {
-      type: 'number',
-      name: 'age',
-      placeholder: 'Enter your age'
-    }).appendTo(form);
-    const specInput = $('<input/>', {
-      type: 'text',
-      name: 'specialization',
-      placeholder: 'Enter your specialization'
-    }).appendTo(form);
-    const yearInput = $('<input/>', {
-      type: 'number',
-      name: 'year',
-      placeholder: 'Enter your university year'
-    }).appendTo(form);
-    const websiteInput = $('<input/>', {
-      type: 'text',
-      name: 'website',
-      placeholder: 'Enter your website'
-    }).appendTo(form);
-    const phoneInput = $('<input/>', {
-      type: 'text',
-      name: 'phone',
-      placeholder: 'Enter your phone'
-    }).appendTo(form);
-    const submitInput = $('<input/>', {
-      type: 'submit',
-      value: 'Add',
-    }).appendTo(form);
+    const inputs = [
+      {
+        label: 'Name',
+        type: 'text',
+        name: 'name',
+        required: true
+      },
+      {
+        label: 'Age',
+        type: 'text',
+        name: 'age',
+        required: true
+      },
+      {
+        label: 'Specialization',
+        type: 'text',
+        name: 'specialization',
+        required: true
+      },
+      {
+        label: 'Studying year',
+        type: 'text',
+        name: 'year',
+        required: true
+      },
+      {
+        label: 'Website',
+        type: 'text',
+        name: 'website',
+        required: true
+      },
+      {
+        label: 'Phone number',
+        type: 'text',
+        name: 'phone',
+        required: true
+      },
+      {
+        type: 'submit',
+        value: 'Add',
+      }
+    ];
+    const row = $('<div/>').addClass('row').appendTo(form);
+    let mediaContainer;
+
+    inputs.forEach(inputOptions => {
+      mediaContainer = $(document.createElement('div')).appendTo(row);
+      mediaContainer.addClass('cell-4');
+      createCustomInput(inputOptions).appendTo(mediaContainer);
+    });
+
+    mediaContainer.removeClass('cell-4').addClass('cell-12');
 
     return form;
   }
@@ -252,37 +409,54 @@ class StudentsView extends EventEmitter {
 
   static createStudentTR (studentObj) {
     const tr = $(document.createElement('tr'));
-    const editIcon = this._icons.edit.clone().on('click', ()=>{this.on('')});
-    const deleteIcon = this._icons.delete.clone().on('click', () => {
-      const view = this;
-      this.constructor.askForDelete.call(view, studentObj.index);
+    const editIcon = this._icons.edit.clone().on('click', () => {
+      this.on('')
     });
-    let td = $('<td/>', {'data-column': 'select'}).appendTo(tr);
+    const deleteIcon = this._icons.delete.clone().on('click', () => {
+      this.constructor.askForDelete.call(this, studentObj.index);
+    });
+    let td = $('<td/>').appendTo(tr);
     let key;
 
-    td.append($('<input/>', {type: 'checkbox', name: 'select'}));
+    tr[0]._studentId = studentObj._studentId;
 
-    td = $('<td/>', {'data-column': 'index', text: `${studentObj.index}`}).appendTo(tr);
+    // Create td with checkbox
+    td.append($('<input/>', {type: 'checkbox', name: 'select'}))[0].cellType = 'select';
+
+    // Create td with current tr index
+    td = $('<td/>').appendTo(tr)[0].cellType = 'index';
 
     for (key in studentObj) {
-      if (studentObj.hasOwnProperty(key) && key != 'index') {
-        td = $('<td/>', {text: studentObj[key], 'data-column': key}).appendTo(tr);
+      if (studentObj.hasOwnProperty(key) && !~key.indexOf('_')) {
+        td = $('<td/>', {text: studentObj[key]}).appendTo(tr);
+        td[0].cellType = '' + key;
       }
     }
 
-    td = $('<td/>', {'data-column': 'edit'}).appendTo(tr);
+    // Create td with edit button
+    td = $('<td/>').appendTo(tr);
+    td[0].cellType = 'editButton';
     td.append(editIcon);
-    td = $('<td/>', {'data-column': 'delete'}).appendTo(tr);
+
+    // Create td with delete button
+    td = $('<td/>').appendTo(tr);
+    td[0].cellType = 'deleteButton';
     td.append(deleteIcon);
 
     return tr;
   }
 
-  static updateStudentsIndexes () {
+  static updateIndexes () {
     const rows = this._elements.list.children();
-    const indexesData = rows.find('[data-column=index]');
-    indexesData.each((index, el) => {
-      $(el).text(index + 1);
+    let indexCells = [];
+
+    rows.each((index, row) => {
+      $(row).children().each((index, cell) => {
+        if (cell.cellType === 'index') {
+          $(cell).text(row.rowIndex);
+          return false;
+        }
+      });
     });
   }
 
@@ -314,14 +488,14 @@ class StudentController {
     this._model = model;
     this._view = view;
 
-    view.on('addStudentRequest', this.constructor.addStudent, this); // Input parameter is serialized Array of form elements
+    view.on('addStudentRequest', this.constructor.sendParsedStudent, this); // Input parameter is serialized Array of form elements
     view.on('deleteStudentRequest', model.deleteStudent, model); //Input parameter is student index
 
-    model.on('studentAdded', view.addStudentToTable, view); // Input parameter is parsed student object
-    model.on('studentDeleted', view.removeStudentFromTable, view);  //Input parameter is student index
+    model.on('studentAdded', view.addStudent, view); // Input parameter is parsed student object
+    model.on('studentDeleted', view.removeStudent, view);  //Input parameter is student index
   }
 
-  static addStudent (serializedData) {
+  static sendParsedStudent (serializedData) {
     const studentObj = this.constructor.parseData(serializedData);
     this._model.addStudent(studentObj);
   }
@@ -348,12 +522,18 @@ class StudentController {
 }
 
 const studentsModel = new StudentsModel();
-const studentsView = new StudentsView(studentsModel);
+const studentsView = new StudentsView();
 const studentsController = new StudentController(studentsModel, studentsView);
 
-$('#123').append(studentsView.getStudentsFormElement).append(studentsView.getStudentsTableElement);
+new Promise((resolve) => {
+  studentsView.renderForm('#123');
+  studentsView.renderTable('#123');
+  resolve();
+}).then(() => {
+  studentsModel.uploadData('http://localhost:63342/Layout_sass/dist/studentsBase.json');
+});
 
-studentsView.enableFormActions();
+
 
 
 
