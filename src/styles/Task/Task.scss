@@ -4,7 +4,7 @@
   padding: 25px 20px;
   box-sizing: border-box;
   font-size: 16px;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
 
   &-container {
@@ -12,27 +12,36 @@
     margin: 0 auto;
 
     @include clearfix();
+
+    &--exposure {
+      display: grid;
+      align-items: start;
+      grid-template: [row1-start] "menu-hz menu-hz ." 100px [row1-end]
+                     [row2-start] "exposure exposure menu-vt" auto [row2-end]
+                     [row3-start] "exposure exposure menu-vt" auto [row3-end]
+                     / auto auto 150px;
+    }
   }
 
   &-title {
     margin-bottom: 20px;
-    color: #fff;
+    color: #FFF;
     text-align: center;
     font-size: 36px;
     line-height: 40px;
     padding: 5px 10px;
-    background: rgba(51,51,51,.8);
+    background: rgba(51, 51, 51, .8);
     transform: skewX(-18deg);
   }
 
-  &-text{
+  &-text {
     color: #555;
     font-size: 18px;
     text-align: justify;
     margin-bottom: 10px;
 
     &--decorated {
-      color: #ff802b;
+      color: #FF802B;
       font-style: italic;
       font-size: 18px;
       display: inline-block;
